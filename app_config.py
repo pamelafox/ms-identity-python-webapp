@@ -1,5 +1,7 @@
 import os
 
+import redis
+
 # Application (client) ID of app registration
 CLIENT_ID = os.getenv("CLIENT_ID")
 # Application's generated client secret: never check this into source control!
@@ -21,6 +23,6 @@ ENDPOINT = 'https://graph.microsoft.com/v1.0/users'  # This resource requires no
 SCOPE = ["User.ReadBasic.All"]
 
 # Tells the Flask-session extension to store sessions in the filesystem
-SESSION_TYPE = "filesystem"
-# Using the file system will not work in most production systems,
-# it's better to use a database-backed session store instead.
+SESSION_TYPE = "redis"
+
+SESSION_REDIS = redis.Redis(host=os.environ['REDIS_HOST'], port=int(os.environ['REDIS_PORT']), password=os.environ['REDIS_PASSWORD'], ssl=True, ssl_cert_reqs=True)

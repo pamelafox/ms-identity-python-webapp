@@ -37,3 +37,7 @@ resource diagnostics 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' 
     ]
   }
 }
+
+output password string = redisCache.listKeys().primaryKey
+output hostName string = redisCache.properties.hostName
+output sslPort int = redisCache.properties.sslPort

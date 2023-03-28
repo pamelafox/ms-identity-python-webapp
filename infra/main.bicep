@@ -32,6 +32,22 @@ module web 'core/host/appservice.bicep' = {
     runtimeVersion: '3.10'
     scmDoBuildDuringDeployment: true
     ftpsState: 'Disabled'
+    appSettings: {
+        REDIS_HOST: redisCache.outputs.hostName
+        REDIS_PORT: redisCache.outputs.sslPort
+        REDIS_PASSWORD: redisCache.outputs.password
+    }
+  }
+}
+
+module redisCache 'redis.bicep' = {
+  name: 'redis'
+  scope: resourceGroup
+  params: {
+    name: '${prefix}-redis'
+    location: location
+    tags: tags
+    workspaceId: logAnalyticsWorkspace.outputs.id
   }
 }
 
@@ -48,7 +64,8 @@ module appServicePlan 'core/host/appserviceplan.bicep' = {
     reserved: true
   }
 }
-/*
+
+
 module logAnalyticsWorkspace 'core/monitor/loganalytics.bicep' = {
   name: 'loganalytics'
   scope: resourceGroup
@@ -57,7 +74,7 @@ module logAnalyticsWorkspace 'core/monitor/loganalytics.bicep' = {
     location: location
     tags: tags
   }
-}*/
+}
 
 output WEB_URI string = 'https://${web.outputs.uri}'
 output WEB_NAME string = web.outputs.name
