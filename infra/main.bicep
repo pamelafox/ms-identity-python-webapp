@@ -40,7 +40,7 @@ module web 'core/host/appservice.bicep' = {
   }
 }
 
-module redisCache 'redis.bicep' = {
+module redisCache 'core/database/redis.bicep' = {
   name: 'redis'
   scope: resourceGroup
   params: {
