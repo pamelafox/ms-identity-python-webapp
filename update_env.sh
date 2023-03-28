@@ -17,6 +17,7 @@ then
   exit 1
 fi
 
+# Update environment variables using the Azure CLI
 az webapp config appsettings set \
   --resource-group $RESOURCE_GROUP_NAME \
   --name $WEB_NAME \
@@ -29,4 +30,6 @@ az webapp config appsettings set \
     EDITPROFILE_USER_FLOW=$EDITPROFILE_USER_FLOW \
     RESETPASSWORD_USER_FLOW=$RESETPASSWORD_USER_FLOW
 
-# TODO: Update redirect URI
+# Update redirect URI using the Azure CLI
+az ad app update --id $CLIENT_ID \
+--web-redirect-uris "http://localhost:5000/getAToken $WEB_URI/getAToken"
