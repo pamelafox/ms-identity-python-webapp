@@ -24,5 +24,5 @@ SCOPE = ["User.ReadBasic.All"]
 
 # Tells the Flask-session extension to store sessions in the filesystem
 SESSION_TYPE = "redis"
-
+SESSION_PERMANENT = True
 SESSION_REDIS = redis.Redis(host=os.environ['REDIS_HOST'], port=int(os.environ['REDIS_PORT']), password=os.environ['REDIS_PASSWORD'], ssl=True, ssl_cert_reqs=True)
